@@ -9,7 +9,7 @@ export const uploader = multer({
       folder: "ImageGram",
       format: async (req, file) => "jpg",
       public_id: (req, file) => {
-        console.log(file);
+        // console.log(file);
         const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e5);
         return `${file.fieldname}-${uniqueSuffix}`;
       },
