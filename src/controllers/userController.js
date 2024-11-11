@@ -1,8 +1,9 @@
-export  async function getProfile(req,res){
-    //call service layer
-    return res.json({
-        success:false,
-        message:"",
-        data:null
-    })
+export async function getProfile(req, res) {
+  //call service layer
+  console.log("inside getProfile");
+  return res.json({
+    success: false,
+    message: "",
+    data: null,
+  });
 }

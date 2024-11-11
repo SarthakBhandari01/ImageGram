@@ -10,11 +10,7 @@ app.get("/hello", (req, res) => {
   res.json({ message: "Hello World" });
 });
 
-app.get("/", (req, res) => {
-  res.send("home");
-});
-
-app.use("/api", apiRouter);
+app.use("/api", apiRouter); //if the url starts with "/api" then the request is forwarded to apiRouter.
 
 app.listen(PORT, () => {
   console.log(`Server running at port ${PORT}`);
