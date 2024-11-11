@@ -9,10 +9,22 @@ export const createPost = async (caption, image, user) => {
   }
 };
 
-export const findAllPost = async () => {
+export const findAllPost = async (offset, limit) => {
   try {
-    const posts = await Post.find();
+    const posts = await Post.find()
+      .sort({ createdAt: -1 })
+      .skip(offset)
+      .limit(limit);
     return posts;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const countAllPost = async () => {
+  try {
+    const postCount = await Post.countDocuments();
+    return postCount;
   } catch (error) {
     console.log(error);
   }
