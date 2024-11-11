@@ -1,4 +1,4 @@
-import { createPost } from "../repositories/postRepository.js";
+import { createPost, findAllPost } from "../repositories/postRepository.js";
 
 export const createPostService = async (createPostObject) => {
   const caption = createPostObject.caption?.trim();
@@ -7,3 +7,8 @@ export const createPostService = async (createPostObject) => {
   const post = await createPost(caption, image);
   return post;
 };
+
+export const getAllPostService=async ()=>{
+    const posts= await findAllPost();
+    return posts;
+}
