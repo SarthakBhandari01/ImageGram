@@ -2,6 +2,7 @@ import {
   createPostService,
   deletePostService,
   getAllPostService,
+  updatePostService,
 } from "../services/postService.js";
 
 export async function createPost(req, res) {
@@ -40,11 +41,11 @@ export async function deletePost(req, res) {
   try {
     const postId = req.query.id;
     const response = await deletePostService(postId);
-    if(!response){
+    if (!response) {
       return res.status(404).json({
-        success:false,
-        message:"Post not found",
-      })
+        success: false,
+        message: "Post not found",
+      });
     }
     return res.status(200).json({
       success: true,
@@ -56,5 +57,26 @@ export async function deletePost(req, res) {
     return res
       .status(500)
       .json({ success: false, message: "Internal Service Error" });
+  }
+}
+
+export async function updatePost(req, res) {
+  try {
+    const updateObject = req.body;
+    const postId = req.query.id;
+    if (req.file) {
+      updateObject.image = req.file.path;
+    }
+    const updatedPost = await updatePostService(postId, updateObject);
+    return res.status(200).json({
+      success: true,
+      message: "Post Updated SuccessFully",
+      data: updatedPost,
+    });
+  } catch (error) {
+    console.log(error);
+    return res
+      .status(500)
+      .json({ success: false, message: "Internal Server Error" });
   }
 }
