@@ -6,6 +6,12 @@ import {
 } from "../services/postService.js";
 
 export async function createPost(req, res) {
+  if (!req.file || !req.file.path) {
+    return res.status(400).json({
+      success: false,
+      message: "Image is Required",
+    });
+  }
   const post = await createPostService({
     image: req.file.path,
     caption: req.body.caption,

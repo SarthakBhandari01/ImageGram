@@ -6,6 +6,11 @@ const app = express(); //create  express app server instance
 
 const PORT = 3000; //port number
 
+app.use(express.json());
+app.use(express.urlencoded({extended:true}));
+app.use(express.text());
+
+
 app.get("/hello", (req, res) => {
   res.json({ message: "Hello World" });
 });
