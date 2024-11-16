@@ -1,7 +1,9 @@
 import express from "express";
-import { getProfile } from "../../controllers/userController.js";
+import { createUser, getProfile } from "../../controllers/userController.js";
+import { zodSignUpSchema } from "../../validator/zodSignUpSchema.js";
+import { validate } from "../../validator/zodValidator.js";
 
 const router = express.Router();
-router.get("/", getProfile);
-
+router.get("/profile", getProfile);
+router.post("/signup", validate(zodSignUpSchema), createUser);
 export default router;
