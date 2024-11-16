@@ -1,17 +1,18 @@
 import express from "express";
 import connectDB from "./config/dbConfig.js";
 import apiRouter from "./routes/apiRouter.js";
+import { isAuthenticated } from "./middleware/authMiddleware.js";
 
 const app = express(); //create  express app server instance
 
 const PORT = 3000; //port number
 
 app.use(express.json());
-app.use(express.urlencoded({extended:true}));
+app.use(express.urlencoded({ extended: true }));
 app.use(express.text());
 
-
-app.get("/hello", (req, res) => {
+app.get("/hello", isAuthenticated, (req, res) => {
+  console.log(req.user);
   res.json({ message: "Hello World" });
 });
 

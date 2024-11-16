@@ -1,6 +1,6 @@
 import { createUser, findUserByEmail } from "../repositories/userRepository.js";
 import bcrypt from "bcrypt";
-import { generateToken } from "../utils/generateToken.js";
+import { generateToken } from "../utils/jwt.js";
 
 export const createUserService = async (createUserObject) => {
   try {
@@ -40,12 +40,21 @@ export const signinUserService = async (userDetails) => {
       };
     }
 
-    const token = await generateToken({
+    const token = generateToken({
       email: user.email,
       id: user._id,
       username: user.username,
     });
     return token;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const checkIfUserExist = async (email) => {
+  try {
+    const response = await findUserByEmail(email);
+    return response;
   } catch (error) {
     throw error;
   }
