@@ -9,8 +9,9 @@ import {
 export const createPostService = async (createPostObject) => {
   const caption = createPostObject.caption?.trim();
   const image = createPostObject.image;
+  const userId=createPostObject.user;
 
-  const post = await createPost(caption, image);
+  const post = await createPost(caption, image,userId);
   return post;
 };
 

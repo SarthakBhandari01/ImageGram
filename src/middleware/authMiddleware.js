@@ -18,7 +18,6 @@ export const isAuthenticated = (req, res, next) => {
     }
 
     req.user = response;
-
     next();
   } catch (error) {
     return res.status(401).json({
