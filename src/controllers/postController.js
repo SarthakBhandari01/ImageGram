@@ -47,13 +47,7 @@ export async function getAllPost(req, res) {
 export async function deletePost(req, res) {
   try {
     const postId = req.query.id;
-    const response = await deletePostService(postId);
-    if (!response) {
-      return res.status(404).json({
-        success: false,
-        message: "Post not found",
-      });
-    }
+    const response = await deletePostService(postId, req.user.id);
     return res.status(200).json({
       success: true,
       message: "Post deleted successfully",
@@ -61,6 +55,11 @@ export async function deletePost(req, res) {
     });
   } catch (error) {
     console.log(error);
+    if (error.status) {
+      return res
+        .status(error.status)
+        .json({ success: false, message: error.message });
+    }
     return res
       .status(500)
       .json({ success: false, message: "Internal Service Error" });

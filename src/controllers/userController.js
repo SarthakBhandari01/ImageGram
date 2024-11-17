@@ -15,7 +15,6 @@ export async function getProfile(req, res) {
 
 export async function createUser(req, res) {
   try {
-    console.log(req.body);
     const username = req.body.username;
     const password = req.body.password;
     const email = req.body.email;

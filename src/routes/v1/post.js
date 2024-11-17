@@ -20,6 +20,6 @@ router.post(
   createPost
 );
 router.get("/", getAllPost);
-router.delete("/", deletePost);
+router.delete("/", isAuthenticated, deletePost);
 router.put("/", uploader.single("image"), updatePost);
 export default router;
