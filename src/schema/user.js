@@ -21,6 +21,11 @@ const userSchema = new mongoose.Schema(
         message: "Invalid Email Formate",
       },
     },
+    role: {
+      type: string,
+      default: "user",
+      enum: ["user", "admin"],
+    },
     password: {
       type: String,
       minlength: 5,
@@ -40,7 +45,7 @@ userSchema.pre("save", function modifyPassword(next) {
 
   //replace the plain password with hashed password
   user.password = hashedPassword;
-  
+
   next();
 });
 

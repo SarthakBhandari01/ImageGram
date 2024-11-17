@@ -44,6 +44,7 @@ export const signinUserService = async (userDetails) => {
       email: user.email,
       id: user._id,
       username: user.username,
+      role:user.role || "user"
     });
     return token;
   } catch (error) {

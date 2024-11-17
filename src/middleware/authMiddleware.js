@@ -1,20 +1,24 @@
 import { checkIfUserExist } from "../services/userService.js";
 import { verifyToken } from "../utils/jwt.js";
 
-export const isAuthenticated = (req, res, next) => {
+export const isAuthenticated = async (req, res, next) => {
   //check if the jwt is passed in the header
   const token = req.headers["x-access-token"];
   if (!token) {
-    return res.status(404).json({ success: false, message: "Token is required" });
+    return res
+      .status(404)
+      .json({ success: false, message: "Token is required" });
   }
 
   //verify token
   try {
     const response = verifyToken(token);
 
-    const doesUserExist = checkIfUserExist(response.email);
+    const doesUserExist = await checkIfUserExist(response.email);
     if (!doesUserExist) {
-      return res.status(404).json({ success: false, message: "user not found" });
+      return res
+        .status(404)
+        .json({ success: false, message: "user not found" });
     }
 
     req.user = response;
@@ -27,3 +31,12 @@ export const isAuthenticated = (req, res, next) => {
   }
 };
 
+export const isAdmin = async (req, res, next) => {
+  if (req.user.role !== "admin") {
+    return res.status(403).json({
+      success: false,
+      message: "unauthorized",
+    });
+  }
+  next();
+};
