@@ -2,10 +2,14 @@ import express from "express";
 import connectDB from "./config/dbConfig.js";
 import apiRouter from "./routes/apiRouter.js";
 import { isAuthenticated } from "./middleware/authMiddleware.js";
+import swaggerUi from "swagger-ui-express";
+import swaggerDocs from "./utils/swaggerOptions.js";
 
 const app = express(); //create  express app server instance
 
 const PORT = 3000; //port number
+
+app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
