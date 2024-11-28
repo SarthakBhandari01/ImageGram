@@ -4,8 +4,16 @@ import apiRouter from "./routes/apiRouter.js";
 import { isAuthenticated } from "./middleware/authMiddleware.js";
 import swaggerUi from "swagger-ui-express";
 import swaggerDocs from "./utils/swaggerOptions.js";
+import rateLimit from "express-rate-limit";
 
 const app = express(); //create  express app server instance
+
+const limiter = rateLimit({
+  windowMs: 0.5 * 60 * 1000,
+  limit: 5,
+});
+
+app.use(limiter);
 
 const PORT = 3000; //port number
 
